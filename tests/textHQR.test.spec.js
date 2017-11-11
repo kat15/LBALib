@@ -1,9 +1,9 @@
 fs = require('fs');
 const {HQR} = require('../lib/HQR');
-const expect = require('chai').expect
+const expect = require('chai').expect;
 
 describe('testing text.hqr', function () {
-    let hqr = new HQR("./tests/text.hqr")
+    let hqr = new HQR('./tests/text.hqr');
 
     it('should all entries be loaded', function () {
         let allEntriesLoaded = true;
@@ -27,5 +27,5 @@ describe('testing text.hqr', function () {
     function checkRecord(record) {
         let testFile = fs.readFileSync('./tests/text00' + record);
         expect(testFile.compare(hqr.entries[record - 1].data) === 0).to.be.a.true;
-    };
+    }
 });

@@ -12,13 +12,10 @@ exports.Text = class Text extends HQR {
     }
 
     loadEntry(hqrRecord, textRecord) {
-        // console.log('loadEntry');
         this.LoadEntry(hqrRecord);
-        string.setPosition(textRecord * 2);
-        let position = string.readLongLittleEndian(this.file);
+        string.setPosition((textRecord - 1) * 2);
+        let position = string.readCharLittleEndian(this.entry.data);
         string.setPosition(position);
-        // console.log(textRecord +":"+position);
-        // this.text = string.readTillZero(this.file);
-        // console.log(this.text);
+        return string.readTillZero(this.entry.data).toString();
     }
 };

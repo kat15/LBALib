@@ -1,20 +1,23 @@
 import * as fs from 'fs';
 import {HQRStructure} from './Structures/HQRStructure';
 import {StringUtil} from '../utils/StringUtil';
+
 declare const Buffer;
 
 let string = new StringUtil();
 
 export class HQR {
-    filename:String;
-    record:number;
-    count:number;
-    entry:HQRStructure;
-    entries:HQRStructure[];
+    file: Buffer;
+    filename: String;
+    record: number;
+    count: number;
+    entry: HQRStructure;
+    entries: HQRStructure[];
 
     constructor(filename) {
         var modal: HQRStructure = new HQRStructure();
         this.filename = filename;
+        this.file = Buffer.from('');
         this.record = 0;
         this.count = 0;
         this.entry = new HQRStructure();
@@ -50,7 +53,7 @@ export class HQR {
     };
 
     openFile = function () {
-        if (!this.file) {
+        if (this.file == '') {
             this.file = fs.readFileSync(this.filename);
         }
         return this.file;
@@ -99,7 +102,15 @@ export class HQR {
 
     /* Toel expand function */
     expand = function (decompressedSize, source) {
-        var loop, indic, size, temp, i, psrc = 0, pdst = 0, jumpback, dest = new Array(decompressedSize);
+        let loop,
+            indic,
+            size,
+            temp,
+            i,
+            psrc = 0,
+            pdst = 0,
+            jumpback,
+            dest = new Array(decompressedSize);
         do {
             loop = 8;
             indic = source[psrc++];

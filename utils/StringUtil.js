@@ -21,12 +21,11 @@ var StringUtil = (function () {
         return ret;
     };
     StringUtil.prototype.readTillZero = function (dis) {
-        var index = 0, length = dis.length, ret = [];
+        var index = 0, length = dis.length, ret = Buffer.from('');
         for (index; index < length; index++) {
-            console.log(dis[this.i]);
-            ret[index] = dis[this.i++];
+            ret += String.fromCharCode(dis[this.i++]);
             if (dis[this.i] === 0x00) {
-                return;
+                return ret;
             }
         }
         return ret;
