@@ -14,7 +14,7 @@ export class HQR {
     entry: HQRStructure;
     entries: HQRStructure[];
 
-    constructor(filename) {
+    constructor(filename:String) {
         var modal: HQRStructure = new HQRStructure();
         this.filename = filename;
         this.file = Buffer.from('');
@@ -24,7 +24,7 @@ export class HQR {
         this.entries = new Array(0);
     };
 
-    loadAllEntries = function (filename) {
+    loadAllEntries = function (filename:String) {
         let index = 1;
         if (filename !== undefined) {
             this.filename = filename;
@@ -41,7 +41,7 @@ export class HQR {
         return false;
     };
 
-    LoadEntry = function (rec) {
+    LoadEntry = function (rec:number) {
         rec--;
         this.openFile();
         this.record = rec;
@@ -63,7 +63,7 @@ export class HQR {
         return this.getPosition(0) / 4;
     };
 
-    getPosition = function (rec) {
+    getPosition = function (rec:number) {
         if (rec === undefined) {
             rec = this.record;
         }
@@ -101,7 +101,7 @@ export class HQR {
     };
 
     /* Toel expand function */
-    expand = function (decompressedSize, source) {
+    expand = function (decompressedSize:number, source) {
         let loop,
             indic,
             size,
