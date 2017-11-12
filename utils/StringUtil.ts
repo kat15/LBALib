@@ -1,4 +1,5 @@
-exports.String = class {
+export class StringUtil {
+    i:number;
 
     constructor() {
         this.i = 0;
@@ -21,6 +22,19 @@ exports.String = class {
             ret = new Array(length);
         for (index; index < length; index++) {
             ret[index] = dis[this.i++];
+        }
+        return ret;
+    }
+
+    readTillZero(dis) {
+        let index = 0,
+            length = dis.length,
+            ret = Buffer.from('');
+        for (index; index < length; index++) {
+            ret += String.fromCharCode(dis[this.i++]);
+            if (dis[this.i] === 0x00) {
+                return ret;
+            }
         }
         return ret;
     }
@@ -57,7 +71,7 @@ exports.String = class {
             shiftBy = 0;
         for (shiftBy; shiftBy < 64; shiftBy += 8) {
             // must cast to long or the shift would be done modulo 32
-            accum |= (long) (this.unsignedByteToInt(dis[this.i++])) << shiftBy;
+            accum |= (this.unsignedByteToInt(dis[this.i++])) << shiftBy;
         }
         return accum;
     }
@@ -92,8 +106,8 @@ exports.String = class {
 
     readShortLittleEndian(dis) {
         // get 2 bytes, unsigned 0..255
-        let low = dis[i++] & 0xff,
-            high = dis[i++] & 0xff;
+        let low = dis[this.i++] & 0xff,
+            high = dis[this.i++] & 0xff;
 
         // combine into a signed short.
         return (high << 8 | low);
